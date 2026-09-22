@@ -153,14 +153,12 @@ REMOVE_FEED_PACKAGES "luci-app-eqos"
 UPDATE_PACKAGE "eqosplus" "sirpdboy/luci-app-eqosplus" "main"
 
 echo "====================================================="
-echo "9. OAF 行为管理（luci-app-oaf + appfilter + kmod-oaf）"
+echo "9. IP 限速（luci-app-eqosplus，替代 feed 内置 luci-app-eqos）"
 echo "====================================================="
-# 来源：用户清单 destan19/OpenAppFilter
-git clone --depth=1 --single-branch --branch "master" "https://github.com/destan19/OpenAppFilter.git" "./package/OpenAppFilter" || {
-	echo "ERROR: failed to clone OpenAppFilter"
-	exit 1
-}
-EXTRACT_PACKAGES "./package/OpenAppFilter" luci-app-oaf oaf open-app-filter
+# 来源：用户清单 sirpdboy/luci-app-eqosplus
+# luci feed 内置 luci-app-eqos 依赖高通 NSS 内核模块，x86 编译必失败，先删除
+REMOVE_FEED_PACKAGES "luci-app-eqos"
+UPDATE_PACKAGE "eqosplus" "sirpdboy/luci-app-eqosplus" "main"
 
 #====================================================
 # 以下插件由 luci feed / packages feed 内置，无需外克隆（已在 Config/GENERAL.txt 启用）：

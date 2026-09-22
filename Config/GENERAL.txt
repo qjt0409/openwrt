@@ -45,8 +45,6 @@ CONFIG_PACKAGE_luci-app-ddns-go=y
 #====================================================
 # 行为管理 / 限速 / 加速
 #====================================================
-# OAF 行为管理（destan19/OpenAppFilter：luci-app-oaf + appfilter + kmod-oaf）
-CONFIG_PACKAGE_luci-app-oaf=y
 # IP 限速（sirpdboy/luci-app-eqosplus；luci feed 内置的 luci-app-eqos 依赖高通 NSS 模块，x86 不可用，已禁用）
 CONFIG_PACKAGE_luci-app-eqosplus=y
 CONFIG_PACKAGE_luci-app-eqos=n
@@ -87,7 +85,7 @@ CONFIG_PACKAGE_luci-app-upnp=y
 CONFIG_PACKAGE_luci-app-autoreboot=y
 
 #====================================================
-# Lua 兼容层（passwall/serverchan/linkease/eqosplus/oaf 等 Lua 插件需要）
+# Lua 兼容层（passwall/serverchan/linkease/eqosplus 等 Lua 插件需要）
 #====================================================
 CONFIG_PACKAGE_luci-compat=y
 CONFIG_PACKAGE_luci-lua-runtime=y
