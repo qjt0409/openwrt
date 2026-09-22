@@ -1,0 +1,69 @@
+# SPDX-License-Identifier: MIT
+# CI 项目：配置预览（不编译固件，只验证 .config 能否生成）
+name: WRT-TEST
+
+# CI 计划
+on:
+  # 手动运行
+  workflow_dispatch:
+    inputs:
+      CONFIG:
+        default: 'X86'
+        required: true
+        type: choice
+        options:
+          - X86
+          - TEST
+      SOURCE:
+        default: 'coolsnowwolf/lede'
+        required: true
+        type: choice
+        options:
+          - coolsnowwolf/lede
+      BRANCH:
+        default: 'master'
+        required: true
+        type: string
+      PACKAGE:
+        required: false
+        type: string
+      TEST:
+        description: '仅输出配置文件，不编译固件。'
+        default: true
+        required: true
+        type: boolean
+
+# CI 权限
+permissions: write-all
+
+# CI 任务
+jobs:
+  config:
+    name: ${{inputs.CONFIG}}
+    # 调用公用编译核心 WRT-CORE.yml
+    uses: ./.github/workflows/WRT-CORE.yml
+    with:
+      # 编译配置
+      WRT_CONFIG: ${{inputs.CONFIG}}
+      # 默认主题（Argon）
+      WRT_THEME: argon
+      # 默认主机名
+      WRT_NAME: LEDE
+      # 默认 WIFI 名称（x86 无无线，仅占位）
+      WRT_SSID: LEDE
+      # 默认 WIFI 密码（x86 无无线，仅占位）
+      WRT_WORD: 12345678
+      # 默认登录地址
+      WRT_IP: 10.0.1.1
+      # 登录密码说明（仅作提示；默认无密码，首次登录自行设置）
+      WRT_PW: 首次登录自行设置
+      # 源码链接
+      WRT_REPO: https://github.com/${{inputs.SOURCE}}.git
+      # 源码分支
+      WRT_BRANCH: ${{inputs.BRANCH}}
+      # 源码名称
+      WRT_SOURCE: ${{inputs.SOURCE}}
+      # 插件调整
+      WRT_PACKAGE: ${{inputs.PACKAGE}}
+      # 仅输出配置文件
+      WRT_TEST: ${{inputs.TEST || false}}

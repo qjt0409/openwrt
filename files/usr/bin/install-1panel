@@ -1,0 +1,44 @@
+#!/bin/sh
+# 1Panel 一键安装（Docker 方式，适用于已内置 Docker 的 OpenWrt x86 固件）
+# 1Panel 官方暂无 OpenWrt 专用 luci 插件，故以容器方式部署；
+# 容器运行后可配合 iStore 商店 / Docker 管理界面查看。
+# 用法：登录路由器 SSH 后执行 install-1panel
+# 可通过环境变量覆盖：PANEL_PORT / PANEL_USERNAME / PANEL_PASSWORD / PANEL_ENTRANCE / PANEL_BASE_DIR / PANEL_IMAGE
+set -e
+
+PANEL_PORT="${PANEL_PORT:-10086}"
+PANEL_USERNAME="${PANEL_USERNAME:-admin}"
+PANEL_PASSWORD="${PANEL_PASSWORD:-ChangeMe_123456}"
+PANEL_ENTRANCE="${PANEL_ENTRANCE:-panelEntrance}"
+PANEL_BASE_DIR="${PANEL_BASE_DIR:-/opt}"
+PANEL_IMAGE="${PANEL_IMAGE:-1panel/1panel:latest}"
+
+echo "1Panel 将使用以下参数启动："
+echo "  端口: ${PANEL_PORT}"
+echo "  账号: ${PANEL_USERNAME}"
+echo "  数据目录: ${PANEL_BASE_DIR}"
+echo "  安全入口: ${PANEL_ENTRANCE}"
+echo "  镜像: ${PANEL_IMAGE}"
+echo ""
+
+docker rm -f 1panel >/dev/null 2>&1 || true
+
+docker run -d \
+	--name 1panel \
+	--restart always \
+	--network host \
+	-v /var/run/docker.sock:/var/run/docker.sock \
+	-v "${PANEL_BASE_DIR}:/opt" \
+	-e TZ=Asia/Shanghai \
+	-e PORT="${PANEL_PORT}" \
+	-e USERNAME="${PANEL_USERNAME}" \
+	-e PASSWORD="${PANEL_PASSWORD}" \
+	-e ENTRANCE="${PANEL_ENTRANCE}" \
+	"${PANEL_IMAGE}"
+
+sleep 3
+echo ""
+echo "1Panel 已启动："
+echo "  访问地址: http://10.0.1.1:${PANEL_PORT}/${PANEL_ENTRANCE}"
+echo "  账号: ${PANEL_USERNAME}"
+echo "  密码: ${PANEL_PASSWORD}  （首次登录后请立即修改）"

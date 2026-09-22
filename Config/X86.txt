@@ -1,0 +1,23 @@
+#====================================================
+# 设备平台：x86_64（J1900 / J1800 均为 64 位处理器）
+#====================================================
+CONFIG_TARGET_x86=y
+CONFIG_TARGET_x86_64=y
+
+#====================================================
+# 固件镜像组件（BIOS + UEFI 双引导，另含 vmdk 虚拟磁盘）
+#====================================================
+CONFIG_GRUB_IMAGES=y
+CONFIG_GRUB_EFI_IMAGES=y
+CONFIG_VMDK_IMAGES=y
+CONFIG_TARGET_IMAGES_GZIP=y
+CONFIG_TARGET_KERNEL_PARTSIZE=128
+CONFIG_TARGET_ROOTFS_PARTSIZE=1024
+CONFIG_TARGET_ROOTFS_EXT4FS=n
+CONFIG_TARGET_ROOTFS_SQUASHFS=y
+
+#====================================================
+# 内核模块调整（J1900/J1800 主板常见 SuperIO 温控）
+#====================================================
+CONFIG_PACKAGE_kmod-hwmon-w83627ehf=y
+CONFIG_PACKAGE_kmod-hwmon-w83627hf=y

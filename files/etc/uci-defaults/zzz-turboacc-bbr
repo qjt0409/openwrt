@@ -1,0 +1,9 @@
+#!/bin/sh
+# TurboACC 默认启用 BBR 拥塞控制（内核 6.18 自带最新 BBR）
+# 在 turboacc 自身的 uci-defaults 之后执行（文件名 zzz- 排序靠后）
+if [ -f "/etc/config/turboacc" ]; then
+	uci -q set "turboacc.config.tcpcca"="bbr"
+	uci -q commit "turboacc"
+	/etc/init.d/turboacc restart >/dev/null 2>&1
+fi
+exit 0

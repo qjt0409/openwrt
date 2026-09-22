@@ -1,0 +1,13 @@
+#====================================================
+# 配置预览（TEST 模式）：仅验证目标平台 .config 能否生成
+#====================================================
+CONFIG_TARGET_x86=y
+CONFIG_TARGET_x86_64=y
+CONFIG_GRUB_IMAGES=y
+CONFIG_GRUB_EFI_IMAGES=y
+CONFIG_VMDK_IMAGES=y
+CONFIG_TARGET_IMAGES_GZIP=y
+CONFIG_TARGET_KERNEL_PARTSIZE=128
+CONFIG_TARGET_ROOTFS_PARTSIZE=1024
+CONFIG_TARGET_ROOTFS_EXT4FS=n
+CONFIG_TARGET_ROOTFS_SQUASHFS=y
