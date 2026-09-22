@@ -45,15 +45,15 @@ jobs:
       # 默认主题（Argon）
       WRT_THEME: argon
       # 默认主机名
-      WRT_NAME: LEDE
+      WRT_NAME: openwrt
       # 默认 WIFI 名称（x86 无无线，仅占位）
       WRT_SSID: LEDE
       # 默认 WIFI 密码（x86 无无线，仅占位）
       WRT_WORD: 12345678
       # 默认登录地址
       WRT_IP: 10.0.1.1
-      # 登录密码说明（仅作提示；默认无密码，首次登录自行设置）
-      WRT_PW: 首次登录自行设置
+      # 登录密码（LEDE 默认 password）
+      WRT_PW: password
       # 源码链接
       WRT_REPO: https://github.com/${{matrix.SOURCE}}.git
       # 源码分支

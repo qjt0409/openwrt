@@ -145,7 +145,15 @@ git clone --depth=1 --single-branch --branch "main" "https://github.com/sbwml/lu
 EXTRACT_PACKAGES "./package/luci-app-alist-src" luci-app-alist
 
 echo "====================================================="
-echo "8. IP 限速（luci-app-eqosplus，替代 feed 内置 luci-app-eqos）"
+echo "8. Docker 中文前端（luci-app-docker，替代 feed 内置 luci-app-dockerman）"
+echo "====================================================="
+# 来源：lisaac/luci-app-docker（中文 Docker CE 管理界面）
+# feed 内置 luci-app-dockerman 与 luci-app-docker 功能重复，删除 feed 版避免共存
+REMOVE_FEED_PACKAGES "luci-app-dockerman"
+UPDATE_PACKAGE "docker" "lisaac/luci-app-docker" "master"
+
+echo "====================================================="
+echo "9. IP 限速（luci-app-eqosplus，替代 feed 内置 luci-app-eqos）"
 echo "====================================================="
 # 来源：用户清单 sirpdboy/luci-app-eqosplus
 # luci feed 内置 luci-app-eqos 依赖高通 NSS 内核模块，x86 编译必失败，先删除
@@ -155,9 +163,9 @@ UPDATE_PACKAGE "eqosplus" "sirpdboy/luci-app-eqosplus" "main"
 #====================================================
 # 以下插件由 luci feed / packages feed 内置，无需外克隆（已在 Config/GENERAL.txt 启用）：
 #   luci-app-uhttpd / luci-app-mwan3 / luci-app-ttyd / luci-app-commands / luci-app-samba4
-#   luci-app-statistics / luci-app-dockerman(+docker/dockerd/docker-compose) / luci-app-upnp
+#   luci-app-statistics / docker(+dockerd/docker-compose) / luci-app-upnp
 #   luci-app-autoreboot / luci-app-openlist / luci-app-lucky / luci-app-ddns-go / luci-app-diskman
-#   luci-app-turboacc(+BBR) / luci-app-argon-config
+#   luci-app-turboacc(+BBR) / luci-app-argon-config / luci-i18n-base-zh-cn
 #====================================================
 
 #====================================================

@@ -18,7 +18,7 @@
 | 平台 | x86_64（兼容 J1900 / J1800 / 其他 64 位 x86） |
 | 登录地址 | **http://10.0.1.1** |
 | 用户名 | root |
-| 密码 | **首次登录自行设置**（已移除 LEDE 默认密码 "password"，首次进 LuCI 会提示设置） |
+| 密码 | **password**（LEDE 默认密码） |
 | 镜像格式 | combined（BIOS 引导）、combined-efi（UEFI 引导）、vmdk（虚拟机），均为 gzip 压缩 |
 | 无线 | 无（x86 软路由不涉及） |
 
@@ -34,7 +34,7 @@
 | 微信推送 | luci-app-wechatpush（原 serverchan） | tty228/luci-app-serverchan（用户清单） |
 | DDNS | ddns-go（luci-app-ddns-go） | luci feed 内置前端 + packages feed 后端 |
 | 网络工具 | lucky（luci-app-lucky） | luci feed 内置前端 + packages feed 后端 |
-| OAF 行为管理 | luci-app-oaf + appfilter + kmod-oaf | destan19/OpenAppFilter（用户清单） |
+| OAF 行为管理 | 已移除（与新版 gcc 不兼容） | — |
 | Web 服务 | luci-app-uhttpd | luci feed 内置（官方） |
 | 负载均衡 | luci-app-mwan3 | luci feed 内置前端 + packages feed 后端 |
 | TTYD 终端 | luci-app-ttyd | luci feed 内置前端 + packages feed 后端 |
@@ -42,7 +42,8 @@
 | 主题 | luci-theme-argon | jerrykuku/luci-theme-argon（用户清单） |
 | 主题设置 | luci-app-argon-config | luci feed 内置（依赖 argon 主题） |
 | 自定义命令 | luci-app-commands | luci feed 内置 |
-| Docker | luci-app-dockerman + docker + dockerd + docker-compose | luci feed + packages feed 内置 |
+| Docker | luci-app-docker（中文前端）+ docker + dockerd + docker-compose | lisaac/luci-app-docker 前端 + packages feed 后端 |
+| 简体中文 | luci-i18n-base-zh-cn | luci feed 内置 |
 | 网络共享 | luci-app-samba4 | luci feed 内置前端 + packages feed 后端 |
 | alist 文件列表 | luci-app-alist | sbwml/luci-app-alist 前端（用户清单）+ packages feed 后端 |
 | openlist | luci-app-openlist | luci feed 内置前端 + packages feed 后端 |
@@ -86,7 +87,7 @@ install-1panel
 ## 五、自定义
 
 - **改管理 IP / 主机名 / 主题**：编辑 `.github/workflows/OWRT-ALL.yml` 中
-  `WRT_IP`（默认 `10.0.1.1`）、`WRT_NAME`（默认 `LEDE`）、`WRT_THEME`（默认 `argon`）。
+  `WRT_IP`（默认 `10.0.1.1`）、`WRT_NAME`（默认 `openwrt`）、`WRT_THEME`（默认 `argon`）。
 - **加/减插件**：编辑 `Config/GENERAL.txt`，按 `CONFIG_PACKAGE_xxx=y` 格式增删行。
 - **手动微调单次编译**：运行 OWRT-ALL 时在 `PACKAGE` 输入框填入如
   `CONFIG_PACKAGE_luci-app-openclash=y`（多行用换行分隔）。
@@ -108,7 +109,7 @@ Config/
 └── TEST.txt            # 干跑用目标配置
 Scripts/
 ├── Packages.sh         # 拉取外部插件并处理与 feeds 的重名冲突
-├── Handles.sh          # LEDE 源码微调（移除默认密码、argon 配色、rust 修复）
+├── Handles.sh          # LEDE 源码微调（argon 配色、rust 修复）
 └── Settings.sh         # 应用 WRT_IP/主题/主机名等编译参数
 files/
 └── etc/uci-defaults/zzz-turboacc-bbr   # 首次启动自动启用 BBR
@@ -117,9 +118,6 @@ files/
 
 ## 七、注意事项与排障
 
-- **OAF 内核模块**：`kmod-oaf` 需要随内核 6.18 编译，上游 destan19/OpenAppFilter 持续适配中；
-  若编译报错（一般是 oaf.ko 编译失败），临时做法：删除 `Config/GENERAL.txt` 中
-  `CONFIG_PACKAGE_luci-app-oaf=y` 一行重跑，其余功能不受影响。
 - **helloworld 源已禁用**：LEDE 自带 feeds 中的 helloworld（ssr-plus 全家桶）与
   passwall-packages 存在约 8 个同名包，会触发包重复定义错误；已从 `feeds.conf.default` 移除该行。
 - **alist 与 openlist**：两者可同时启用、互不冲突。luci-app-openlist（luci feed 内置）通过

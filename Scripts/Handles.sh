@@ -19,17 +19,10 @@ else
 fi
 
 echo "====================================================="
-echo "2. 移除 LEDE 默认 root 密码（恢复首次登录自行设置密码）"
+echo "2. root 默认密码保持 password（LEDE 默认设置，不做修改）"
 echo "====================================================="
-# LEDE 的 zzz-default-settings 会把 root 密码写死为 "password"（知名哈希含 V4UetPzk），
-# 与需求"首次登录设置密码"冲突，删除对应行后 root 默认无密码，LuCI 首次登录会提示设置。
-DEFAULT_SETTINGS="$PACKAGE_PATH/lean/default-settings/files/zzz-default-settings"
-if [ -f "$DEFAULT_SETTINGS" ]; then
-	sed -i '/V4UetPzk/d' "$DEFAULT_SETTINGS" \
-		&& echo "LEDE default root password removed (first-login password setup restored)."
-else
-	echo "default-settings not found, skip."
-fi
+# LEDE 的 zzz-default-settings 会把 root 密码设为 "password"，按需求保留不改。
+echo "root password: password (LEDE default, kept as-is)."
 
 echo "====================================================="
 echo "3. 修复 Rust 编译（老版本 ci-llvm 选项）"
