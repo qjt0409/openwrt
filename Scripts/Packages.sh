@@ -152,10 +152,13 @@ echo "====================================================="
 # dockerman 依赖 luci-lib-docker，必须一起拉
 REMOVE_FEED_PACKAGES "luci-app-dockerman"
 REMOVE_FEED_PACKAGES "luci-lib-docker"
-git clone --depth=1 --single-branch --branch "master" "https://github.com/lisaac/luci-lib-docker.git" "./package/luci-lib-docker" || {
+# lisaac/luci-lib-docker 仓库结构是 collections/luci-lib-docker/Makefile，需提取
+git clone --depth=1 --single-branch --branch "master" "https://github.com/lisaac/luci-lib-docker.git" "./package/luci-lib-docker-src" || {
 	echo "ERROR: failed to clone lisaac/luci-lib-docker"
 	exit 1
 }
+cp -rf "./package/luci-lib-docker-src/collections/luci-lib-docker" ./package/
+rm -rf "./package/luci-lib-docker-src"
 git clone --depth=1 --single-branch --branch "master" "https://github.com/lisaac/luci-app-docker.git" "./package/luci-app-docker-src" || {
 	echo "ERROR: failed to clone lisaac/luci-app-docker"
 	exit 1
