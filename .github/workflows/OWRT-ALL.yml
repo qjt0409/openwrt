@@ -4,9 +4,9 @@ name: OWRT-ALL
 
 # CI 计划
 on:
-  # 自动编译：每两天北京时间03:12（对应UTC 19:12）
+  # 自动编译：每天北京时间05:21（对应UTC 21:21）
   schedule:
-    - cron: 12 19 */2 * *
+    - cron: 21 21 * * *
   # 手动编译
   workflow_dispatch:
     inputs:
