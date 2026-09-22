@@ -145,12 +145,18 @@ git clone --depth=1 --single-branch --branch "main" "https://github.com/sbwml/lu
 EXTRACT_PACKAGES "./package/luci-app-alist-src" luci-app-alist
 
 echo "====================================================="
-echo "8. Docker 中文前端（luci-app-docker，替代 feed 内置 luci-app-dockerman）"
+echo "8. Docker 中文前端（lisaac 维护的 luci-app-dockerman）"
 echo "====================================================="
-# 来源：lisaac/luci-app-docker（中文 Docker CE 管理界面）
-# feed 内置 luci-app-dockerman 与 luci-app-docker 功能重复，删除 feed 版避免共存
+# 来源：lisaac/luci-app-docker（dockerman 原作者维护，中文界面）
+# 先删 feed 里的旧版 dockerman，再用 lisaac 新版替换
 REMOVE_FEED_PACKAGES "luci-app-dockerman"
-UPDATE_PACKAGE "docker" "lisaac/luci-app-docker" "master"
+git clone --depth=1 --single-branch --branch "master" "https://github.com/lisaac/luci-app-docker.git" "./package/luci-app-docker-src" || {
+	echo "ERROR: failed to clone lisaac/luci-app-docker"
+	exit 1
+}
+cp -rf "./package/luci-app-docker-src/applications/luci-app-dockerman" ./package/
+rm -rf "./package/luci-app-docker-src"
+echo "extracted package: luci-app-dockerman (lisaac Chinese fork)"
 
 echo "====================================================="
 echo "9. IP 限速（luci-app-eqosplus，替代 feed 内置 luci-app-eqos）"

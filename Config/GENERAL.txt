@@ -74,8 +74,8 @@ CONFIG_PACKAGE_luci-app-commands=y
 CONFIG_PACKAGE_luci-app-samba4=y
 # 流量统计（luci feed 内置 + packages 源 collectd/rrdtool1）
 CONFIG_PACKAGE_luci-app-statistics=y
-# Docker（中文前端 luci-app-docker [lisaac] + packages 源 docker/dockerd/docker-compose）
-CONFIG_PACKAGE_luci-app-docker=y
+# Docker（中文前端 luci-app-dockerman [lisaac 维护版] + packages 源 docker/dockerd/docker-compose）
+CONFIG_PACKAGE_luci-app-dockerman=y
 CONFIG_PACKAGE_docker=y
 CONFIG_PACKAGE_dockerd=y
 CONFIG_PACKAGE_docker-compose=y
