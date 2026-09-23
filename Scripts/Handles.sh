@@ -55,3 +55,14 @@ if [ -f "$DNSMASQ_MK" ]; then
 else
 	echo "dnsmasq Makefile not found, skip."
 fi
+
+echo "====================================================="
+echo "5. iStore 中文翻译路径修正（po 在 src/po/，luci.mk 只认 po/）"
+echo "====================================================="
+STORE_DIR="./package/luci-app-store"
+if [ -d "$STORE_DIR/src/po" ] && [ ! -d "$STORE_DIR/po" ]; then
+	cp -r "$STORE_DIR/src/po" "$STORE_DIR/po"
+	echo "iStore po files copied from src/po to po/."
+else
+	echo "iStore po path already fixed or not found, skip."
+fi
