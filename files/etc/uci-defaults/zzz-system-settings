@@ -1,13 +1,12 @@
 #!/bin/sh
-# 系统默认设置：iStore 中文 + LuCI 中文
+# 系统默认设置：LuCI 简体中文（iStore 通过 i18n 读取此语言）
 # 在其他 uci-defaults 之后执行（文件名 zzz- 排序靠后）
 
-# 1. LuCI 默认语言设为简体中文
-uci -q set "luci.main.lang"="zh_cn"
+# LuCI 默认语言设为简体中文（zh-cn，连字符）
+# iStore 的 vue_lang() 通过 i18n.translate("istore_vue_lang") 读取翻译，
+# 只有当前语言为 zh-cn 时才能从 po 文件读到 "zh-cn"
+uci -q delete "luci.main.lang"
+uci -q set "luci.main.lang"="zh-cn"
 uci -q commit "luci"
-
-# 2. iStore 前端强制中文（注入 vue 语言环境）
-uci -q set "istore.istore.istore_vue_lang"="zh-cn"
-uci -q commit "istore"
 
 exit 0
