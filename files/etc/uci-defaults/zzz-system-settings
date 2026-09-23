@@ -1,15 +1,13 @@
 #!/bin/sh
-# 系统默认设置：中文界面 + 防火墙环境一致性
+# 系统默认设置：iStore 中文 + LuCI 中文
 # 在其他 uci-defaults 之后执行（文件名 zzz- 排序靠后）
 
-# 1. LuCI 默认语言设为简体中文（iStore 等前端会读取此设置）
+# 1. LuCI 默认语言设为简体中文
 uci -q set "luci.main.lang"="zh_cn"
 uci -q commit "luci"
 
-# 2. 禁用 dnsmasq nftset（我们用 iptables/fw3 环境，nftset 是 nftables 专用）
-#    消除 passwall 警告：nftables (fw4) 应用环境不完整，切换至 iptables
-uci -q set "dhcp.@dnsmasq[0].nftset"=""
-uci -q delete "dhcp.@dnsmasq[0].nftset"
-uci -q commit "dhcp"
+# 2. iStore 前端强制中文（注入 vue 语言环境）
+uci -q set "istore.istore.istore_vue_lang"="zh-cn"
+uci -q commit "istore"
 
 exit 0

@@ -127,6 +127,9 @@ CONFIG_PACKAGE_kmod-dummy=y
 # 网络加速（Flow Offload，iptables/nftables 双栈）
 CONFIG_PACKAGE_kmod-ipt-offload=y
 CONFIG_PACKAGE_kmod-nft-offload=y
+# fw4 (nftables 防火墙) — passwall 完整环境
+CONFIG_PACKAGE_firewall4=y
+CONFIG_PACKAGE_nftables=y
 # 诊断
 CONFIG_PACKAGE_kmod-inet-diag=y
 CONFIG_PACKAGE_kmod-netlink-diag=y

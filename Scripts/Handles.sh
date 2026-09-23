@@ -31,3 +31,27 @@ if [ -d "$FEEDS_PATH/packages/lang/rust" ]; then
 	sed -i 's/ci-llvm=true/ci-llvm=false/g' "$FEEDS_PATH/packages/lang/rust/Makefile" \
 		&& echo "rust Makefile fixed."
 fi
+
+echo "====================================================="
+echo "4. 升级 dnsmasq 到 2.93（passwall 需要 >= 2.92）"
+echo "====================================================="
+DNSMASQ_MK="./package/network/services/dnsmasq/Makefile"
+if [ -f "$DNSMASQ_MK" ]; then
+	# 备份原 Makefile
+	cp "$DNSMASQ_MK" "${DNSMASQ_MK}.orig"
+	# 更新版本号和 hash
+	sed -i 's/PKG_UPSTREAM_VERSION:=2.91/PKG_UPSTREAM_VERSION:=2.93/' "$DNSMASQ_MK"
+	sed -i 's/PKG_HASH:=.*/PKG_HASH:=0c00d4e5c97c8306e5fb932b348b34269c9c29a0e7df0e8e82958b407092bc19/' "$DNSMASQ_MK"
+	# 用 openwrt 官方的 patches 替换
+	DNSMASQ_PATCHDIR="./package/network/services/dnsmasq/patches"
+	if [ -d "$DNSMASQ_PATCHDIR" ]; then
+		rm -rf "$DNSMASQ_PATCHDIR"
+	fi
+	mkdir -p "$DNSMASQ_PATCHDIR"
+	# 下载 openwrt 官方 patches
+	curl -sL "https://raw.githubusercontent.com/openwrt/openwrt/master/package/network/services/dnsmasq/patches/100-remove-old-runtime-kernel-support.patch" -o "$DNSMASQ_PATCHDIR/100-remove-old-runtime-kernel-support.patch"
+	curl -sL "https://raw.githubusercontent.com/openwrt/openwrt/master/package/network/services/dnsmasq/patches/200-ubus_dns.patch" -o "$DNSMASQ_PATCHDIR/200-ubus_dns.patch"
+	echo "dnsmasq upgraded to 2.93."
+else
+	echo "dnsmasq Makefile not found, skip."
+fi
