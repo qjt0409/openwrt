@@ -66,3 +66,14 @@ if [ -d "$STORE_DIR/src/po" ] && [ ! -d "$STORE_DIR/po" ]; then
 else
 	echo "iStore po path already fixed or not found, skip."
 fi
+
+echo "====================================================="
+echo "6. 修复易有云 linkease.lua 依赖已删除的 luci.model.ipkg"
+echo "====================================================="
+LINKEASE_CBI=$(find "$PACKAGE_PATH" -path "*luci-app-linkease*" -name "linkease.lua" 2>/dev/null | head -n 1)
+if [ -n "$LINKEASE_CBI" ]; then
+	sed -i 's/^require("luci.model.ipkg")/-- removed: require("luci.model.ipkg") (module dropped in 24.10, unused)/' "$LINKEASE_CBI"
+	echo "linkease.lua fixed: $LINKEASE_CBI"
+else
+	echo "linkease.lua not found, skip."
+fi
