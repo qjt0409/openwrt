@@ -6,6 +6,13 @@ CONFIG_DEVEL=y
 CONFIG_TARGET_ROOTFS_INITRAMFS=n
 
 #====================================================
+# 主题
+#====================================================
+# Argon 主题（jerrykuku 维护版 + feed 内置配置工具）
+CONFIG_PACKAGE_luci-theme-argon=y
+CONFIG_PACKAGE_luci-app-argon-config=y
+
+#====================================================
 # 科学上网
 # 来源：Openwrt-Passwall 官方仓库（Scripts/Packages.sh 拉取，并已处理与 feeds 的重名冲突）
 #====================================================
