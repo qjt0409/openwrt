@@ -1,12 +1,14 @@
 #!/bin/sh
-# 系统默认设置：LuCI 简体中文（iStore 通过 i18n 读取此语言）
+# 系统默认设置：LuCI 简体中文 + dockerd 自动启动
 # 在其他 uci-defaults 之后执行（文件名 zzz- 排序靠后）
 
-# LuCI 默认语言设为简体中文（zh-cn，连字符）
-# iStore 的 vue_lang() 通过 i18n.translate("istore_vue_lang") 读取翻译，
-# 只有当前语言为 zh-cn 时才能从 po 文件读到 "zh-cn"
+# 1. LuCI 默认语言设为简体中文（zh-cn，连字符）
 uci -q delete "luci.main.lang"
 uci -q set "luci.main.lang"="zh-cn"
 uci -q commit "luci"
+
+# 2. dockerd 开机自启并立即启动
+/etc/init.d/dockerd enable
+/etc/init.d/dockerd start >/dev/null 2>&1
 
 exit 0
