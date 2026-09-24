@@ -8,8 +8,9 @@ uci -q set "luci.main.lang"="zh-cn"
 uci -q commit "luci"
 
 # 2. 修复 dockerman 镜像加速器格式错误（"- https://..." 导致 daemon.json 解析失败）
-#    清除错误的 mirror 列表，让 dockerd 用默认配置启动
+#    清除错误格式，写入正确的镜像加速器
 uci -q delete dockerd.lists
+uci -q add_list dockerd.lists="https://docker.xuanyuan.me"
 uci -q commit dockerd
 
 # 3. dockerd 开机自启并立即启动
