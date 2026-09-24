@@ -17,8 +17,9 @@ CONFIG_PACKAGE_luci-app-passwall2=y
 #====================================================
 # iStore 商店（linkease/istore）
 CONFIG_PACKAGE_luci-app-store=y
-# 易有云文件管理器（linkease/luci-app-linkease）
+# 易有云文件管理器（linkease/luci-app-linkease 前端 + link-ease 后端）
 CONFIG_PACKAGE_luci-app-linkease=y
+CONFIG_PACKAGE_link-ease=y
 # alist 文件列表（sbwml/luci-app-alist 前端 + packages 源 net/alist 后端）
 CONFIG_PACKAGE_luci-app-alist=y
 CONFIG_PACKAGE_alist=y
