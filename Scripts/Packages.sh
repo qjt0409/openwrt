@@ -126,7 +126,7 @@ git clone --depth=1 --single-branch "https://github.com/linkease/nas-packages.gi
 	echo "ERROR: failed to clone nas-packages"
 	exit 1
 }
-EXTRACT_PACKAGES "./package/nas-packages/network/services" linkease
+EXTRACT_PACKAGES "./package/nas-packages/network/services" linkease linkease-common-bin
 rm -rf "./package/nas-packages"
 
 echo "====================================================="
