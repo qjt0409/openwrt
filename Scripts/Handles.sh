@@ -77,3 +77,10 @@ if [ -n "$LINKEASE_CBI" ]; then
 else
 	echo "linkease.lua not found, skip."
 fi
+
+# 修复 init 脚本里二进制名不匹配：luci 前端调用 link-ease，实际二进制是 linkease
+LINKEASE_INIT=$(find "$PACKAGE_PATH" -path "*luci-app-linkease*" -name "linkeaseinitd" 2>/dev/null | head -n 1)
+if [ -n "$LINKEASE_INIT" ]; then
+	sed -i 's/command link-ease/command linkease/g' "$LINKEASE_INIT"
+	echo "linkease init fixed: $LINKEASE_INIT"
+fi
