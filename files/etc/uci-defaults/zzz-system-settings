@@ -7,4 +7,13 @@ uci -q delete "luci.main.lang"
 uci -q set "luci.main.lang"="zh-cn"
 uci -q commit "luci"
 
+# Alist 监听端口改为用户设置的 10088（luci 界面填的 port 没映射到 listen_http_port）
+uci -q set alist.config.listen_http_port="10088"
+uci -q commit alist
+
+# 禁用 openlist（用户用 alist，避免端口冲突）
+uci -q set openlist.config.enabled="0"
+uci -q commit openlist
+/etc/init.d/openlist stop >/dev/null 2>&1
+
 exit 0
