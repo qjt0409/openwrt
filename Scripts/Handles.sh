@@ -84,3 +84,9 @@ if [ -n "$LINKEASE_INIT" ]; then
 	sed -i 's/command link-ease/command linkease/g' "$LINKEASE_INIT"
 	echo "linkease init fixed: $LINKEASE_INIT"
 fi
+
+# 修复 linkease 配置文件冲突（luci-app-linkease 和 linkease 主程序都提供 /etc/config/linkease）
+if [ -f "./package/luci-app-linkease/root/etc/config/linkease" ]; then
+	rm -f ./package/luci-app-linkease/root/etc/config/linkease
+	echo "removed conflicting luci-app-linkease config"
+fi
