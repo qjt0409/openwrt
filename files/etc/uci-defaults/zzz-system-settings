@@ -7,7 +7,12 @@ uci -q delete "luci.main.lang"
 uci -q set "luci.main.lang"="zh-cn"
 uci -q commit "luci"
 
-# 2. dockerd 开机自启并立即启动
+# 2. 修复 dockerman 镜像加速器格式错误（"- https://..." 导致 daemon.json 解析失败）
+#    清除错误的 mirror 列表，让 dockerd 用默认配置启动
+uci -q delete dockerd.lists
+uci -q commit dockerd
+
+# 3. dockerd 开机自启并立即启动
 /etc/init.d/dockerd enable
 /etc/init.d/dockerd start >/dev/null 2>&1
 
