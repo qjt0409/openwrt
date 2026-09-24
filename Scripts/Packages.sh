@@ -135,14 +135,15 @@ echo "====================================================="
 UPDATE_PACKAGE "pushbot" "zzsj0928/luci-app-pushbot" "master"
 
 echo "====================================================="
-echo "7. alist 文件列表（luci-app-alist 前端）"
+echo "7. alist 文件列表（sbwml 后端 + 前端）"
 echo "====================================================="
-# 来源：用户清单 sbwml/luci-app-alist（仅取前端；后端 alist 使用 packages feed 内置 net/alist）
+# 来源：用户清单 sbwml/luci-app-alist（同时提取后端 alist 和前端 luci-app-alist）
 git clone --depth=1 --single-branch --branch "main" "https://github.com/sbwml/luci-app-alist.git" "./package/luci-app-alist-src" || {
 	echo "ERROR: failed to clone luci-app-alist"
 	exit 1
 }
-EXTRACT_PACKAGES "./package/luci-app-alist-src" luci-app-alist
+EXTRACT_PACKAGES "./package/luci-app-alist-src" alist luci-app-alist
+rm -rf "./package/luci-app-alist-src"
 
 echo "====================================================="
 echo "8. Docker 中文前端（lisaac 维护的 luci-app-dockerman）"
