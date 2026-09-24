@@ -7,11 +7,19 @@ uci -q delete "luci.main.lang"
 uci -q set "luci.main.lang"="zh-cn"
 uci -q commit "luci"
 
-# 2. 修复 dockerman 镜像加速器格式错误（"- https://..." 导致 daemon.json 解析失败）
-#    清除错误格式，写入正确的镜像加速器
-uci -q delete dockerd.lists
-uci -q add_list dockerd.lists="https://docker.xuanyuan.me"
-uci -q commit dockerd
+# 2. 修复 dockerman 镜像加速器格式错误
+#    用户可能按 YAML 格式填了 "- https://xxx"，导致 daemon.json 解析失败
+#    自动清理每个 mirror 条目前面多余的 "- "
+OLD_MIRRORS=$(uci -q get dockerd.lists)
+if [ -n "$OLD_MIRRORS" ]; then
+	uci -q delete dockerd.lists
+	for m in $OLD_MIRRORS; do
+		# 去掉开头的 "- " 前缀
+		CLEAN_M=$(echo "$m" | sed 's/^- *//')
+		uci -q add_list dockerd.lists="$CLEAN_M"
+	done
+	uci -q commit dockerd
+fi
 
 # 3. dockerd 开机自启并立即启动
 /etc/init.d/dockerd enable
