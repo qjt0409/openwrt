@@ -1,5 +1,5 @@
 #!/bin/sh
-# 系统默认设置：LuCI 简体中文 + alist 开机自启
+# 系统默认设置：LuCI 简体中文 + 易有云开机自启
 # 在其他 uci-defaults 之后执行（文件名 zzz- 排序靠后）
 
 # 1. LuCI 默认语言设为简体中文（zh-cn，连字符）
@@ -7,20 +7,11 @@ uci -q delete "luci.main.lang"
 uci -q set "luci.main.lang"="zh-cn"
 uci -q commit "luci"
 
-# 2. alist 开机自启并立即启动（默认端口10088）
-uci -q set alist.config.port=10088
-uci -q set alist.config.listen_http_port=10088
-uci -q commit alist
-/etc/init.d/alist enable
-/etc/init.d/alist start >/dev/null 2>&1
-
-# 3. 易有云开机自启并立即启动
+# 2. 易有云开机自启并立即启动
 /etc/init.d/linkease enable
 /etc/init.d/linkease start >/dev/null 2>&1
 
-# 4. sysupgrade 保留配置（更新固件不丢）
-for d in /etc/lucky /etc/alist; do
-	grep -q "^$d$" /etc/sysupgrade.conf 2>/dev/null || echo "$d" >> /etc/sysupgrade.conf
-done
+# 3. sysupgrade 保留配置（更新固件不丢）
+grep -q "^/etc/lucky$" /etc/sysupgrade.conf 2>/dev/null || echo "/etc/lucky" >> /etc/sysupgrade.conf
 
 exit 0

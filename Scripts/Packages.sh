@@ -130,6 +130,11 @@ EXTRACT_PACKAGES "./package/nas-packages/network/services" linkease linkease-com
 rm -rf "./package/nas-packages"
 
 echo "====================================================="
+echo "4.5 Lucky 最新版（gdy666/luci-app-lucky）"
+echo "====================================================="
+UPDATE_PACKAGE "lucky" "gdy666/luci-app-lucky" "master"
+
+echo "====================================================="
 echo "5. 微信推送（luci-app-wechatpush，原 luci-app-serverchan）"
 echo "====================================================="
 # 来源：用户清单 tty228/luci-app-serverchan
@@ -140,17 +145,6 @@ echo "6. 全能推送（luci-app-pushbot）"
 echo "====================================================="
 # 来源：自找 zzsj0928/luci-app-pushbot（用户清单无此仓库）
 UPDATE_PACKAGE "pushbot" "zzsj0928/luci-app-pushbot" "master"
-
-echo "====================================================="
-echo "7. alist 文件列表（sbwml 后端 + 前端）"
-echo "====================================================="
-# 来源：用户清单 sbwml/luci-app-alist（同时提取后端 alist 和前端 luci-app-alist）
-git clone --depth=1 --single-branch --branch "main" "https://github.com/sbwml/luci-app-alist.git" "./package/luci-app-alist-src" || {
-	echo "ERROR: failed to clone luci-app-alist"
-	exit 1
-}
-EXTRACT_PACKAGES "./package/luci-app-alist-src" alist luci-app-alist
-rm -rf "./package/luci-app-alist-src"
 
 echo "====================================================="
 echo "8. Docker 中文前端（lisaac 维护的 luci-app-dockerman）"
