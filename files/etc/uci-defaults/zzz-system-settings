@@ -18,4 +18,9 @@ uci -q commit alist
 /etc/init.d/linkease enable
 /etc/init.d/linkease start >/dev/null 2>&1
 
+# 4. sysupgrade 保留配置（更新固件不丢）
+for d in /etc/lucky /etc/alist; do
+	grep -q "^$d$" /etc/sysupgrade.conf 2>/dev/null || echo "$d" >> /etc/sysupgrade.conf
+done
+
 exit 0
