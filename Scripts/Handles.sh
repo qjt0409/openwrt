@@ -90,3 +90,7 @@ if [ -f "./package/luci-app-linkease/root/etc/config/linkease" ]; then
 	rm -f ./package/luci-app-linkease/root/etc/config/linkease
 	echo "removed conflicting luci-app-linkease config"
 fi
+
+# 强制刷新 naiveproxy（旧版本下载链接404，用最新Makefile重新下载）
+rm -rf ./build_dir/target-*/naiveproxy-* ./dl/naiveproxy-* 2>/dev/null
+echo "naiveproxy cache cleared"
