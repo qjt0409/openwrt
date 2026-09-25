@@ -11,4 +11,8 @@ uci -q commit "luci"
 /etc/init.d/alist enable
 /etc/init.d/alist start >/dev/null 2>&1
 
+# 3. 易有云开机自启并立即启动
+/etc/init.d/linkease enable
+/etc/init.d/linkease start >/dev/null 2>&1
+
 exit 0
