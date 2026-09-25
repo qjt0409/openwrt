@@ -132,7 +132,7 @@ rm -rf "./package/nas-packages"
 echo "====================================================="
 echo "4.5 Lucky 最新版（gdy666/luci-app-lucky）"
 echo "====================================================="
-UPDATE_PACKAGE "lucky" "gdy666/luci-app-lucky" "master"
+UPDATE_PACKAGE "lucky" "gdy666/luci-app-lucky" "main"
 
 echo "====================================================="
 echo "5. 微信推送（luci-app-wechatpush，原 luci-app-serverchan）"
