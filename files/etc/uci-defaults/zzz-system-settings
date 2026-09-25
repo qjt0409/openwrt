@@ -14,10 +14,8 @@ uci -q commit alist
 /etc/init.d/alist enable
 /etc/init.d/alist start >/dev/null 2>&1
 
-# 3. 易有云完整版开机自启并立即启动
-/etc/init.d/linkease-app-entry enable
-/etc/init.d/linkease-app-entry start >/dev/null 2>&1
-/etc/init.d/linkeasefull enable
-/etc/init.d/linkeasefull start >/dev/null 2>&1
+# 3. 易有云开机自启并立即启动
+/etc/init.d/linkease enable
+/etc/init.d/linkease start >/dev/null 2>&1
 
 exit 0
