@@ -117,7 +117,7 @@ EXTRACT_PACKAGES "./package/istore/luci" luci-app-store luci-lib-taskd luci-lib-
 rm -rf "./package/istore"
 
 echo "====================================================="
-echo "4. 易有云文件管理器（luci-app-linkease 前端 + linkease 主程序）"
+echo "4. 易有云完整版（luci-app-linkease 前端 + linkeasefull 主程序）"
 echo "====================================================="
 # 前端
 UPDATE_PACKAGE "linkease" "linkease/luci-app-linkease" "master"
@@ -126,7 +126,7 @@ git clone --depth=1 --single-branch "https://github.com/linkease/nas-packages.gi
 	echo "ERROR: failed to clone nas-packages"
 	exit 1
 }
-EXTRACT_PACKAGES "./package/nas-packages/network/services" linkease linkease-common-bin
+EXTRACT_PACKAGES "./package/nas-packages/network/services" linkeasefull linkease-app-entry linkease-common-bin
 rm -rf "./package/nas-packages"
 
 echo "====================================================="

@@ -41,10 +41,13 @@ CONFIG_PACKAGE_geoview=y
 #====================================================
 # iStore 商店（linkease/istore）
 CONFIG_PACKAGE_luci-app-store=y
-# 易有云文件管理器（luci-app-linkease 前端 + linkease 主程序）
+# 易有云完整版（luci-app-linkease 前端 + linkeasefull 主程序）
 CONFIG_PACKAGE_luci-app-linkease=y
-CONFIG_PACKAGE_linkease=y
+CONFIG_PACKAGE_linkeasefull=y
+CONFIG_PACKAGE_linkease-app-entry=y
 CONFIG_PACKAGE_linkease-common-bin=y
+CONFIG_PACKAGE_cifsmount=y
+CONFIG_PACKAGE_kmod-fs-cifs=y
 # alist 文件列表（sbwml/luci-app-alist 前端 + packages 源 net/alist 后端）
 CONFIG_PACKAGE_luci-app-alist=y
 CONFIG_PACKAGE_alist=y
